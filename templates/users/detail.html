@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    <img src="{{ user.image_url or 'default_image_url' }}" alt="{{ user.first_name }}'s profile picture">
+    <form action="/users/{{ user.id }}/delete" method="POST">
+        <a href="/users/{{ user.id }}/edit" class="edit-button">Edit</a>
+        <input type="submit" value="Delete">
+    </form>
+
+    <h2>Posts</h2>
+    <ul>
+        {% for post in user.posts %}
+            <li>
+                <h3><a href="/users/{{ user.id }}/posts/{{ post.id }}">{{ post.title }}</a></h3>
+                <p>{{ post.content }}</p>
+                <p>Created at: {{ post.created_at }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/users/{{ user.id }}/posts/new" class="edit-button">Add Post</a>
+{% endblock %}
+
